@@ -58,6 +58,7 @@
 - `@str '=' @str '+' @str` *concatenation*
 - `@str '=' @str ':' $var` *sub-char*
 - `@str '=' @str ':' $var '-' $var` *sub-string*
+- `@str '=' @str '*' $var` *repeat*
 
 ## Conditionals
 - `$var '=' $var '==' $var`

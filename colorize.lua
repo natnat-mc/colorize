@@ -201,6 +201,12 @@ local stream={
 			variables[name]=getvar(str):sub(getvar(fr), getvar(to))
 		end
 	},
+	{ -- repeat
+		{SNAME, '=', SNAME, '%*', VNAME},
+		function(name, str, cntv)
+			variables[name]=getvar(str):rep(getvar(cntv))
+		end
+	},
 
 	-- conditionals
 	{ -- equalty
