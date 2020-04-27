@@ -100,6 +100,7 @@
 - `'!sload' %sep subp %osep @str` *loads a subprogram from a string*
 - `'!srun' %sep subp` *runs a subprogram*
 - `'!srun' %sep subp %osep $var` *runs a subprogram if var is nonzero*
+- `'!sreturn' %osep $var` *exits a subprogram conditionally*
 
 ## Output control
 - `'!nl` *append a newline*

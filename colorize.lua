@@ -450,6 +450,14 @@ local stream={
 			end
 		end
 	},
+	{ -- exit from subprogram conditionally
+		{'!sreturn', OSEP, VNAME},
+		function(condv)
+			if getvar(condv)~=0 then
+				return {subp='return'}
+			end
+		end
+	},
 
 	-- crash program
 	{ -- without message
@@ -594,6 +602,8 @@ local function doscript(name)
 			end
 		elseif opts.subp=='run' then
 			doscript(opts.name)
+		elseif opts.subp=='return' then
+			return
 		end
 		if opts.app then
 			local ov=variables[opts.app] or ''
