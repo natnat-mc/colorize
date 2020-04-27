@@ -598,7 +598,7 @@ local stream={
 
 local function doline(line, subp, lineno)
 	local options={}
-	if #line==0 then
+	if #line==0 or not line:match "{" then
 		return options, line
 	end
 	for _, filter in ipairs(stream) do
@@ -687,7 +687,9 @@ local function doscript(name)
 		elseif opts.wrt then
 			variables[opts.wrt]=text
 		elseif not opts.cmt then
-			io.write(text)
+			if #text~=0 then
+				io.write(text)
+			end
 		end
 		if cursor>#lines then
 			break
