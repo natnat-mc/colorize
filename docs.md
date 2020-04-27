@@ -84,8 +84,8 @@
 - `'b' %sep color` *background*
 - `gradient '%' number` *foreground*
 - `'b' %sep gradient '%' number` *background*
-- `gradient2d '%' number '%' number' *foreground*
-- `'b' %sep gradient2d '%' number '%' number' *background*
+- `gradient2d '%' number '%' number'` *foreground*
+- `'b' %sep gradient2d '%' number '%' number'` *background*
 - `'^'` *reset colors*
 
 ## Display string
