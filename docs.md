@@ -111,6 +111,8 @@
 ## Crash
 - `'!err'` *without message*
 - `'!err' %osep @str` *with message*
+- `'!err' %osep $var` *conditionally*
+- `'!err' %osep @str %osep $var` *conditionally, with message*
 
 ## Misc
 - ` ` *noop*

@@ -472,6 +472,22 @@ local stream={
 			error("Crash: "..getvar(name))
 		end
 	},
+	{ -- conditionally
+		{'!err', OSEP, VNAME},
+		function(cnd)
+			if getvar(cnd)~=0 then
+				error("Voluntary crash")
+			end
+		end
+	},
+	{ -- conditionally, with message
+		{'!err', OSEP, SNAME, OSEP, VNAME},
+		function(name, cnd)
+			if getvar(cnd)~=0 then
+				error("Crash: "..getvar(name))
+			end
+		end
+	},
 
 	-- control options
 	{ -- add linebreak
