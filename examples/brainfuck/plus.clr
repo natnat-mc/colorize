@@ -1,0 +1,4 @@
+{$set=$val+$1}
+{$set=$set%$valmax}
+{@set=b$set}
+{!srun set}

@@ -1,0 +1,75 @@
+{$tablen=30000}
+{$valmax=256}
+{!cmt}Classic hello world (fast)
+{@prog="++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."}
+{!cmt}Compact hello world (slow)
+{@prog="+[-[<<[+[--->]-[<<<]]]>>>-]>-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-."}
+{!cmt}Whatever you want
+{@prog=""}
+{@input=""}
+
+Creating necessary ressources...{!nl}
+
+{!sload set set.clr}
+{!sload plus plus.clr}
+{!sload minus minus.clr}
+{!sload right right.clr}
+{!sload left left.clr}
+{!sload print print.clr}
+{!sload read read.clr}
+{!sload read_ read_.clr}
+{!sload loops loops.clr}
+{!sload loops_ loops_.clr}
+{!sload loope loope.clr}
+
+{@t=" "}
+{@prog=@prog+@t}
+{@tab=b$0}
+{@tab=@tab*$tablen}
+
+{@plus="+"}
+{@minus="-"}
+{@right=">"}
+{@left="<"}
+{@print="."}
+{@read=","}
+{@loops="["}
+{@loope="]"}
+
+{$inpos=1}
+{$tabpos=1}
+{$pos=0}
+
+Setup complete, executing...{!nl}
+
+{!mpush}
+{$pos=$pos+$1}
+{@char=@prog:$pos}
+{@val=@tab:$tabpos}
+{$val=b@val}
+
+{$t=@char==@loope}
+{!srun loope $t}
+{$t=@char==@loops}
+{!srun loops $t}
+{$t=@char==@plus}
+{!srun plus $t}
+{$t=@char==@minus}
+{!srun minus $t}
+{$t=@char==@right}
+{!srun right $t}
+{$t=@char==@left}
+{!srun left $t}
+{$t=@char==@print}
+{!srun print $t}
+{$t=@char==@read}
+{!srun read $t}
+
+{$t=#@prog}
+{$t=$pos-$t}
+{!mjump 1 $t}
+{!mpop}
+
+{!nl}
+
+Done!{!nl}

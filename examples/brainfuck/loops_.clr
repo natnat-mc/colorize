@@ -1,0 +1,16 @@
+{$tr=1}
+{!mpush}
+{$pos=$pos+$1}
+{@tc=@prog:$pos}
+
+{$t=@tc==@loops}
+{$tr=$tr+$t}
+
+{$t=@tc==@loope}
+{$tr=$tr-$t}
+
+{!mjump 1 $tr}
+{!mpop}
+
+{$pos=$pos+$1}
+{@char=@prog:$pos}

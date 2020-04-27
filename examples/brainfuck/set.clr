@@ -1,0 +1,6 @@
+{$t=$tabpos-$1}
+{@tl=@tab:$1-$t}
+{$t=$tabpos+$1}
+{@tr=@tab:$t-$-1}
+{@tab=@tl+@set}
+{@tab=@tab+@tr}

@@ -1,0 +1,2 @@
+{$tabpos=$tabpos%$tablen}
+{$tabpos=$tabpos+$1}

@@ -21,5 +21,10 @@ You can write subprograms that can be loaded and executed by a program, to do co
 Most things are documented in [`docs.md`](docs.md), but things are not set in stone and can change.
 For now, it works with `string.gsub` loops, but ideally I'll rewrite this in moonscript with lpeg.
 
+## What do you mean it's turing-complete?
+***My brother wrote a brainfuck interpreter with it***, which is included in the examples
+
+Do note however, that it is painfully slow, because the colorize interpreter itself is painfully slow.
+
 ## What's its license?
 MIT

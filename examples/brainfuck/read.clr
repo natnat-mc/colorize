@@ -1,0 +1,6 @@
+{@set=@input:$inpos}
+{$t=#@set}
+{$t=$t==$0}
+{!srun read_ $t}
+{!srun set}
+{$inpos=$inpos+$1}
