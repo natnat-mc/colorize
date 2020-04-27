@@ -64,6 +64,7 @@
 - `$var '=' $var '==' $var`
 - `$var '=' $var '<' $var`
 - `$var '=' @str '==' @str`
+- `$var '=' @str '<' @str` *inclusion*
 
 ## Define colors
 - `color '=' number %sep number %sep number`
@@ -89,6 +90,7 @@
 ## Display string
 - `@str`
 - `@str ':' $var` *sub-char*
+- `@str ':' $var '-' $var` *sub-string*
 
 ## Markers
 - `'!mpush'` *pushes a marker onto the stack*
@@ -107,6 +109,10 @@
 - `'!cmt'` *discard output*
 - `'!wrt' %osep @str` *stores output in variable*
 - `'!app' %osep @str` *appends output to variable*
+
+## Input
+- `'!read' %sep filename %osep @str` *reads file into string*
+- `'!read' %osep @str %osep @str` *reads file specified by string, into string*
 
 ## Crash
 - `'!err'` *without message*

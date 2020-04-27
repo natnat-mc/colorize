@@ -8,6 +8,24 @@ local floor=math.floor
 local insert, remove=table.insert, table.remove
 local byte, char=string.byte, string.char
 
+local function readfile(file)
+	if file=='-' then
+		return io.read '*a'
+	else
+		local fd, err=io.open(file, 'r')
+		if not fd then
+			error(err, 2)
+		end
+		local cnt=fd:read '*a'
+		if not cnt then
+			error("Failed to read file", 2)
+		end
+		fd:close()
+		return cnt
+	end
+end
+
+
 local NAME="([%w_]+)"
 local VNAME="(%$%-?[%w_]+)"
 local SNAME="(%@[%w_]+)"
@@ -227,6 +245,12 @@ local stream={
 			variables[name]=getvar(lh)==getvar(rh) and 1 or 0
 		end
 	},
+	{ -- string inclusion
+		{VNAME, '=', SNAME, '<', SNAME},
+		function(name, lh, rh)
+			variables[name]=getvar(rh):find(getvar(lh), 1, true) and 1 or 0
+		end
+	},
 
 	-- define color
 	{ -- define color from rgb
@@ -398,7 +422,12 @@ local stream={
 			return getvar(str):sub(idx, idx)
 		end
 	},
-
+	{ -- substring
+		{SNAME, ':', VNAME, '%-', VNAME},
+		function(str, fr, to)
+			return getvar(str):sub(fr, to)
+		end
+	},
 
 	-- marker control
 	{ -- push marker
@@ -456,6 +485,20 @@ local stream={
 			if getvar(condv)~=0 then
 				return {subp='return'}
 			end
+		end
+	},
+
+	-- input
+	{ -- read file
+		{'!read', SEP, FNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(fname)
+		end
+	},
+	{ -- read vaiable file
+		{'!read', OSEP, SNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(getvar(fname))
 		end
 	},
 

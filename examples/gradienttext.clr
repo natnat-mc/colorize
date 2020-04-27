@@ -1,6 +1,5 @@
 {!cmt} Configure text
-{!wrt @str}I can do anything{!nl}
-{!app @str}And even multiple lines{!nl}
+{!read - @str}
 {left = 255, 0,   0}
 {right= 0,   255, 0}
 
