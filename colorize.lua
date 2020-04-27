@@ -120,7 +120,11 @@ local stream={
 	{ -- from first byte of string
 		{VNAME, '=', 'b', SNAME},
 		function(lh, rh)
-			variables[lh]=byte(getvar(rh))
+			rh=getvar(rh)
+			if #rh==0 then
+				error("Attempt to get first byte of empty string")
+			end
+			variables[lh]=byte(rh)
 		end
 	},
 
