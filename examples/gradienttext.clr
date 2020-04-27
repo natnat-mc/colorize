@@ -1,0 +1,30 @@
+{!cmt} Configure text
+{!wrt @str}I can do anything{!nl}
+{!app @str}And even multiple lines{!nl}
+{left = 255, 0,   0}
+{right= 0,   255, 0}
+
+{!cmt} Initialize
+{$len=#@str}
+{grad=left-right}
+
+{!cmt} Loop
+{$i=1}
+{$av=0}
+{!mpush}
+
+{!cmt} Draw one char
+{$av=$i*$100}
+{$av=$av/$len}
+{clr=grad%$av}
+{clr}
+{@str:$i}
+
+{!cmt} Loop
+{$t=$i-$len}
+{$i=$i+$1}
+{!mjump 1, $t}
+{!mpop}
+
+{!cmt} Reset
+{^}

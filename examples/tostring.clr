@@ -1,0 +1,19 @@
+{!cmt} Params: $tostring_in
+{!cmt} Output: @tostring_out
+{!cmt} Uses: $tostring_*, @tostring_*
+
+{!cmt} Init
+{$tostring_num=$tostring_in}
+{@tostring_0="0"}
+{$tostring_0=b@tostring_0}
+{@tostring_out=""}
+
+{!cmt} Loop
+{!mpush}
+{$tostring_digit=$tostring_num%$10}
+{$tostring_digit=$tostring_digit+$tostring_0}
+{$tostring_num=$tostring_num/$10}
+{@tostring_chr=b$tostring_digit}
+{@tostring_out=@tostring_chr+@tostring_out}
+{!mjump 1 $tostring_num}
+{!mpop}

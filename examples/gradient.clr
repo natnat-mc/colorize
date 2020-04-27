@@ -1,0 +1,47 @@
+{!cmt} Gradient colors
+{ul=255, 0,   0 }
+{ur=0,   255, 0 }
+{dl=0,   0,   255}
+{dr=255, 255, 255}
+
+{!cmt} Gradient size
+{$w=100}
+{$h=50}
+
+{!cmt} Gradient char
+{@chr=' '}
+
+{!cmt} Initialization
+{g1=ul-ur}{g2=dl-dr}
+{g=g1+g2}
+
+{!cmt} Vertical loop
+{$y=0}
+{!mpush}
+
+{!cmt} Horizontal loop
+{$x=0}
+{!mpush}
+
+{!cmt} Draw a square
+{$gx=$x*$100}{$gy=$y*$100}
+{$gx=$gx/$w}{$gy=$gy/$h}
+{c=g %$gx %$gy}
+{b; c}
+{@chr}
+
+{!cmt} Horizontal loop
+{$t=$x-$w}
+{$x=$x+$1}
+{!mjump 1, $t}
+{!mpop}
+
+{!cmt} Draw line break
+{^}
+{!nl}
+
+{!cmt} Vertical loop
+{$t=$y-$h}
+{$y=$y+$1}
+{!mjump 1, $t}
+{!mpop}
