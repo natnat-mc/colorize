@@ -8,11 +8,12 @@ local floor=math.floor
 local insert, remove=table.insert, table.remove
 local byte, char=string.byte, string.char
 
-local function readfile(file)
+local function readfile(file, bin)
 	if file=='-' then
 		return io.read '*a'
 	else
-		local fd, err=io.open(file, 'r')
+		local mode=bin and 'rb' or 'r'
+		local fd, err=io.open(file, mode)
 		if not fd then
 			error(err, 2)
 		end
@@ -495,10 +496,22 @@ local stream={
 			variables[str]=readfile(fname)
 		end
 	},
-	{ -- read vaiable file
+	{ -- read variable file
 		{'!read', OSEP, SNAME, OSEP, SNAME},
 		function(fname, str)
 			variables[str]=readfile(getvar(fname))
+		end
+	},
+	{ -- read binary file
+		{'!readb', SEP, FNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(fname, true)
+		end
+	},
+	{ -- read binary variable file
+		{'!readb', OSEP, SNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(getvar(fname), true)
 		end
 	},
 
