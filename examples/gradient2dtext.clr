@@ -1,0 +1,96 @@
+{!cmt} Constants
+{!wrt @NEWLINE}{!nl}
+{ul=255,0,0}
+{ur=0,255,0}
+{dl=0,0,255}
+{dr=255,255,255}
+
+{!cmt} Read input
+{!read - @txt}
+{$len=#@txt}
+
+{!cmt}  Remove trailing newline
+{@_last=@txt : $-1}
+{$_trailing=@_last == @NEWLINE}
+{$_end=$-1 - $_trailing}
+{@txt=@txt : $1 - $_end}
+
+{!cmt} Subprograms
+{!cmt}  Count got newline
+{!wrt @_code}{{}$lineno=$lineno+$1}{!nl}
+{!app @_code}{{}!srun count_up}
+{!sload count_nl @_code}
+
+{!cmt}  Count update maxw
+{!wrt @_code}{{}$_gt=$maxw<$charno}{!nl}
+{!app @_code}{{}$_delta=$charno-$maxw}{!nl}
+{!app @_code}{{}$_delta=$_delta*$_gt}{!nl}
+{!app @_code}{{}$maxw=$maxw+$_delta}{!nl}
+{!app @_code}{{}$charno=0}
+{!sload count_up @_code}
+
+{!cmt}  Draw got newline
+{!wrt @_code}{{}$charno=0}{!nl}
+{!app @_code}{{}$lineno=$lineno+$1}{!nl}
+{!app @_code}{{}!nl}
+{!sload draw_nl @_code}
+
+{!cmt} Find max line length and line count
+{$lineno=1}
+{$charno=0}
+{$maxw=0}
+
+{!cmt}  Iterate chars
+{$_pos=0}
+{!mpush}
+{$_pos=$_pos+$1}
+{$charno=$charno+$1}
+{@_chr=@txt:$_pos}
+
+{!cmt}  Handle newline
+{$_nl=@_chr==@NEWLINE}
+{!srun count_nl $_nl}
+
+{!cmt}  End loop
+{$_loop=$_pos-$len}
+{!mjump 1 $_loop}
+{!mpop}
+{$maxh=$lineno}
+{!srun count_up $_nl}
+
+{!cmt} Draw gradient
+{!cmt}  Build gradient
+{top=ul-ur}
+{bot=dl-dr}
+{gradient=top+bot}
+
+{!cmt}  Loop chars
+{$pos=0}
+{$charno=0}
+{$lineno=1}
+{!mpush}
+{$pos=$pos+$1}
+{$charno=$charno+$1}
+{@chr=@txt:$pos}
+
+{!cmt}  Handle newline
+{$_nl=@chr==@NEWLINE}
+{!srun draw_nl $_nl}
+{!mjump 1 $_nl}
+
+{!cmt}  Draw char
+{$xp=$charno*$100}
+{$xp=$xp/$maxw}
+{$yp=$lineno*$100}
+{$yp=$yp/$maxh}
+{color=gradient %$xp %$yp}
+{color}
+{@chr}
+
+{!cmt}  End loop
+{$_loop=$pos-$len}
+{!mjump 1 $_loop}
+{!mpop}
+
+{!cmt} Cleanup
+{^}{!nl}

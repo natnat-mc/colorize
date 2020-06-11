@@ -8,11 +8,12 @@ local floor=math.floor
 local insert, remove=table.insert, table.remove
 local byte, char=string.byte, string.char
 
-local function readfile(file)
+local function readfile(file, bin)
 	if file=='-' then
 		return io.read '*a'
 	else
-		local fd, err=io.open(file, 'r')
+		local mode=bin and 'rb' or 'r'
+		local fd, err=io.open(file, mode)
 		if not fd then
 			error(err, 2)
 		end
@@ -119,7 +120,11 @@ local stream={
 	{ -- from first byte of string
 		{VNAME, '=', 'b', SNAME},
 		function(lh, rh)
-			variables[lh]=byte(getvar(rh))
+			rh=getvar(rh)
+			if #rh==0 then
+				error("Attempt to get first byte of empty string")
+			end
+			variables[lh]=byte(rh)
 		end
 	},
 
@@ -495,10 +500,22 @@ local stream={
 			variables[str]=readfile(fname)
 		end
 	},
-	{ -- read vaiable file
+	{ -- read variable file
 		{'!read', OSEP, SNAME, OSEP, SNAME},
 		function(fname, str)
 			variables[str]=readfile(getvar(fname))
+		end
+	},
+	{ -- read binary file
+		{'!readb', SEP, FNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(fname, true)
+		end
+	},
+	{ -- read binary variable file
+		{'!readb', OSEP, SNAME, OSEP, SNAME},
+		function(fname, str)
+			variables[str]=readfile(getvar(fname), true)
 		end
 	},
 
@@ -581,7 +598,7 @@ local stream={
 
 local function doline(line, subp, lineno)
 	local options={}
-	if #line==0 then
+	if #line==0 or not line:match "{" then
 		return options, line
 	end
 	for _, filter in ipairs(stream) do
@@ -670,7 +687,9 @@ local function doscript(name)
 		elseif opts.wrt then
 			variables[opts.wrt]=text
 		elseif not opts.cmt then
-			io.write(text)
+			if #text~=0 then
+				io.write(text)
+			end
 		end
 		if cursor>#lines then
 			break

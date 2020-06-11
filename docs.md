@@ -31,6 +31,7 @@
 - A variable `$-var` is equal to the opposite value of `$var`, and is read-only
 - A variable which has a number as name has a value of the given number, and is read-only
 - Marks are not shared between subprograms, but everything else is
+- A filename of `-` means either stdin or stdout, depending on data direction
 
 # Command list
 ## Variable assignment
@@ -83,8 +84,8 @@
 - `'b' %sep color` *background*
 - `gradient '%' number` *foreground*
 - `'b' %sep gradient '%' number` *background*
-- `gradient2d '%' number '%' number' *foreground*
-- `'b' %sep gradient2d '%' number '%' number' *background*
+- `gradient2d '%' number '%' number'` *foreground*
+- `'b' %sep gradient2d '%' number '%' number'` *background*
 - `'^'` *reset colors*
 
 ## Display string
@@ -113,6 +114,8 @@
 ## Input
 - `'!read' %sep filename %osep @str` *reads file into string*
 - `'!read' %osep @str %osep @str` *reads file specified by string, into string*
+- `'!readb' %sep filename %osep @str` *reads binary file into string*
+- `'!readb' %osep @str %osep @str` *reads binary file specified by string, into string*
 
 ## Crash
 - `'!err'` *without message*
