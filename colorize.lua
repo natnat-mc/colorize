@@ -614,7 +614,7 @@ end
 
 local subprograms={}
 local function readscript(file, name)
-	local lines, i={}, 1
+	local lines, i={''}, 1
 	if file=='-' or file==nil then
 		for line in io.lines() do
 			lines[i], i=line, i+1
@@ -627,7 +627,7 @@ local function readscript(file, name)
 	subprograms[name]=lines
 end
 local function loadscript(code, name)
-	local lines, i={}, 1
+	local lines, i={''}, 1
 	for line in code:gmatch "([^\n]+)" do
 		lines[i], i=line, i+1
 	end
