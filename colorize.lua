@@ -606,7 +606,7 @@ local function doline(line, subp, lineno)
 		local fn=function(...)
 			local ok, rv=pcall(filter[2], ...)
 			if not ok then
-				error("In subprogram "..subp..", line "..lineno..": "..rv)
+				error("In subprogram "..subp..", line "..lineno.."\n"..rv)
 			end
 			local rt=type(rv)
 			if rt=='nil' then
@@ -677,7 +677,10 @@ local function doscript(name)
 				readscript(opts.file, opts.name)
 			end
 		elseif opts.subp=='run' then
-			doscript(opts.name)
+			local ok, err=pcall(doscript, opts.name)
+			if not ok then
+				error("In subprogram "..name..", line "..cursor.."\n"..err)
+			end
 		elseif opts.subp=='return' then
 			return
 		end
@@ -698,5 +701,8 @@ local function doscript(name)
 end
 
 readscript(arg[1], 'main')
-doscript('main')
+local ok, err=pcall(doscript, 'main')
+if not ok then
+	print(err)
+end
 
